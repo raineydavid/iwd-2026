@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 222 47% 7%;
+    --foreground: 40 20% 95%;
+
+    --card: 222 40% 10%;
+    --card-foreground: 40 20% 95%;
+
+    --popover: 222 40% 10%;
+    --popover-foreground: 40 20% 95%;
+
+    --primary: 40 52% 58%;
+    --primary-foreground: 222 47% 7%;
+
+    --secondary: 222 30% 15%;
+    --secondary-foreground: 40 20% 90%;
+
+    --muted: 222 25% 14%;
+    --muted-foreground: 220 15% 55%;
+
+    --accent: 40 52% 58%;
+    --accent-foreground: 222 47% 7%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 222 25% 18%;
+    --input: 222 25% 18%;
+    --ring: 40 52% 58%;
+
+    --radius: 0.75rem;
+
+    --gold: 40 52% 58%;
+    --gold-light: 40 60% 72%;
+    --gold-dark: 40 45% 42%;
+    --navy: 222 47% 7%;
+    --navy-light: 222 30% 15%;
+    --navy-lighter: 222 20% 22%;
+
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
+
+    --gradient-gold: linear-gradient(135deg, hsl(40 52% 58%), hsl(40 60% 72%));
+    --gradient-navy: linear-gradient(180deg, hsl(222 47% 7%), hsl(222 40% 12%));
+    --shadow-gold: 0 4px 30px -4px hsl(40 52% 58% / 0.25);
+    --shadow-card: 0 8px 40px -12px hsl(0 0% 0% / 0.5);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+}
+
+@layer utilities {
+  .text-gradient-gold {
+    background: linear-gradient(135deg, hsl(var(--gold)), hsl(var(--gold-light)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-gradient-gold {
+    background: linear-gradient(135deg, hsl(var(--gold)), hsl(var(--gold-light)));
+  }
+
+  .bg-gradient-navy {
+    background: linear-gradient(180deg, hsl(var(--navy)), hsl(var(--navy-light)));
+  }
+
+  .border-gold {
+    border-color: hsl(var(--gold) / 0.3);
+  }
+
+  .glow-gold {
+    box-shadow: var(--shadow-gold);
+  }
+
+  .card-elevated {
+    background: hsl(var(--navy-light));
+    box-shadow: var(--shadow-card);
+    border: 1px solid hsl(var(--border));
+  }
+}
