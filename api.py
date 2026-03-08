@@ -10,10 +10,9 @@ from dataclasses import asdict
 from pathlib import Path
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, HTMLResponse
-from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from orchestrator import WellnessOrchestrator
@@ -32,8 +31,6 @@ app.add_middleware(
 )
 
 STATIC_DIR = Path(__file__).parent / "static"
-if STATIC_DIR.exists():
-    app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
 
 # ── Models ───────────────────────────────────────────────────────────────────
@@ -59,8 +56,16 @@ class ProviderInfo(BaseModel):
 
 @app.get("/", response_class=HTMLResponse)
 async def index():
-    html_path = Path(__file__).parent / "static" / "index.html"
+    html_path = STATIC_DIR / "index.html"
     return HTMLResponse(content=html_path.read_text())
+
+
+@app.get("/static/{file_path:path}")
+async def static_file(file_path: str):
+    full_path = STATIC_DIR / file_path
+    if full_path.exists() and full_path.is_file():
+        return FileResponse(full_path)
+    return HTMLResponse(status_code=404, content="Not found")
 
 
 @app.get("/api/life-stages")
