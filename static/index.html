@@ -3,504 +3,586 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SupportHers — Women's Wellness AI</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>SupportHers</title>
+    <link rel="icon" href="/static/supporthers.png">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&family=DM+Serif+Display&display=swap');
+
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --pink-50: #fdf2f8; --pink-100: #fce7f3; --pink-200: #fbcfe8;
-            --pink-400: #f472b6; --pink-500: #ec4899; --pink-600: #db2777;
-            --purple-50: #faf5ff; --purple-100: #f3e8ff; --purple-200: #e9d5ff;
-            --purple-400: #a78bfa; --purple-500: #8b5cf6; --purple-600: #7c3aed;
-            --purple-700: #6d28d9;
-            --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb;
-            --gray-400: #9ca3af; --gray-500: #6b7280; --gray-600: #4b5563;
-            --gray-700: #374151; --gray-800: #1f2937; --gray-900: #111827;
-            --radius: 16px;
-            --shadow: 0 4px 24px rgba(0,0,0,0.06);
-            --shadow-lg: 0 8px 40px rgba(0,0,0,0.1);
+            --bg: #faf8f5;
+            --surface: #fff;
+            --copper: #c4856a;
+            --copper-light: #e8cfc3;
+            --copper-dark: #9c6550;
+            --ink: #2c2421;
+            --ink-light: #6b5e58;
+            --ink-muted: #a89992;
+            --border: #e8e2dc;
+            --border-light: #f0ece8;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --sans: 'DM Sans', -apple-system, system-ui, sans-serif;
         }
 
         body {
-            font-family: 'Inter', -apple-system, system-ui, sans-serif;
-            background: linear-gradient(135deg, var(--pink-50) 0%, var(--pink-100) 25%, var(--purple-50) 60%, var(--purple-100) 100%);
-            min-height: 100vh;
-            color: var(--gray-800);
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--ink);
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* ── Header ─────────────────────────── */
-        .header {
-            text-align: center;
-            padding: 3rem 1rem 1rem;
+        /* ── Nav ─────────────────────────────── */
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem 2rem;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface);
         }
-        .header h1 {
-            font-size: clamp(2rem, 5vw, 3.2rem);
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--pink-500), var(--purple-600));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
         }
-        .header p {
-            color: var(--gray-500);
-            font-size: 1.1rem;
-            margin-top: 0.3rem;
+        .nav-brand img {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
         }
-        .iwd-badge {
-            display: inline-block;
-            margin-top: 0.8rem;
-            padding: 0.35rem 1rem;
-            background: linear-gradient(135deg, var(--pink-500), var(--purple-500));
-            color: white;
-            border-radius: 999px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 0.02em;
+        .nav-brand span {
+            font-family: var(--serif);
+            font-size: 1.25rem;
+            color: var(--ink);
         }
-
-        /* ── Container ──────────────────────── */
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 1.5rem 4rem;
-        }
-
-        /* ── Section titles ─────────────────── */
-        .section-title {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: var(--gray-700);
-            margin: 2.5rem 0 1rem;
-        }
-
-        /* ── Life stage cards ───────────────── */
-        .stages-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1rem;
-        }
-        .stage-card {
-            background: white;
-            border-radius: var(--radius);
-            padding: 1.3rem;
-            box-shadow: var(--shadow);
-            border: 2.5px solid transparent;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            text-align: center;
-        }
-        .stage-card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--pink-200);
-        }
-        .stage-card.selected {
-            border-color: var(--pink-500);
-            background: linear-gradient(135deg, #fff5f7, #faf5ff);
-            box-shadow: 0 4px 24px rgba(236,72,153,0.15);
-        }
-        .stage-icon { font-size: 2.2rem; margin-bottom: 0.4rem; }
-        .stage-label { font-weight: 700; font-size: 0.95rem; color: var(--gray-800); }
-        .stage-age { font-size: 0.8rem; color: var(--gray-400); margin-top: 0.15rem; }
-        .stage-desc {
+        .nav-settings {
             font-size: 0.82rem;
-            color: var(--gray-500);
-            margin-top: 0.5rem;
-            line-height: 1.5;
-            display: none;
+            color: var(--ink-muted);
+            background: none;
+            border: 1px solid var(--border);
+            padding: 0.4rem 0.9rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: var(--sans);
+            transition: border-color 0.2s, color 0.2s;
         }
-        .stage-card.selected .stage-desc { display: block; }
+        .nav-settings:hover { border-color: var(--copper); color: var(--ink-light); }
 
-        /* ── Example topics ─────────────────── */
-        .topics-row {
+        /* ── Hero ────────────────────────────── */
+        .hero {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+        }
+        .hero h1 {
+            font-family: var(--serif);
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 400;
+            line-height: 1.2;
+            color: var(--ink);
+        }
+        .hero h1 em {
+            color: var(--copper);
+            font-style: italic;
+        }
+        .hero p {
+            margin-top: 1rem;
+            font-size: 1rem;
+            color: var(--ink-muted);
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+        }
+
+        /* ── Stages ──────────────────────────── */
+        .stages {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .stages-label {
+            font-size: 0.72rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--ink-muted);
+            margin-bottom: 0.75rem;
+        }
+        .stages-row {
+            display: flex;
+            gap: 0;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            background: var(--surface);
+        }
+        .stage-btn {
+            flex: 1;
+            padding: 1rem 0.5rem;
+            background: none;
+            border: none;
+            border-right: 1px solid var(--border);
+            cursor: pointer;
+            text-align: center;
+            transition: background 0.2s;
+            font-family: var(--sans);
+        }
+        .stage-btn:last-child { border-right: none; }
+        .stage-btn:hover { background: var(--border-light); }
+        .stage-btn.active {
+            background: var(--copper);
+        }
+        .stage-btn.active .stage-btn-label,
+        .stage-btn.active .stage-btn-age { color: #fff; }
+        .stage-btn-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--ink);
+            line-height: 1.3;
+        }
+        .stage-btn-age {
+            display: block;
+            font-size: 0.72rem;
+            color: var(--ink-muted);
+            margin-top: 0.15rem;
+        }
+
+        /* ── Stage detail ────────────────────── */
+        .stage-detail {
+            display: none;
+            max-width: 800px;
+            margin: 1rem auto 0;
+            padding: 0 2rem;
+        }
+        .stage-detail.visible { display: block; }
+        .stage-detail-inner {
+            padding: 1.25rem 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--surface);
+        }
+        .stage-detail-desc {
+            font-size: 0.9rem;
+            color: var(--ink-light);
+            font-weight: 300;
+        }
+        .stage-detail-topics {
+            margin-top: 0.75rem;
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-        .topic-chip {
-            padding: 0.4rem 1rem;
-            background: white;
-            border: 1.5px solid var(--purple-200);
-            border-radius: 999px;
-            font-size: 0.85rem;
-            color: var(--purple-600);
-            cursor: pointer;
-            transition: all 0.2s;
-            font-weight: 500;
-        }
-        .topic-chip:hover {
-            background: var(--purple-100);
-            border-color: var(--purple-400);
-        }
-
-        /* ── Settings panel ─────────────────── */
-        .settings-toggle {
-            display: inline-flex;
-            align-items: center;
             gap: 0.4rem;
-            padding: 0.4rem 1rem;
-            background: white;
-            border: 1.5px solid var(--gray-200);
-            border-radius: 10px;
-            font-size: 0.85rem;
-            color: var(--gray-600);
+        }
+        .topic-btn {
+            font-size: 0.78rem;
+            font-family: var(--sans);
+            padding: 0.3rem 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            background: var(--bg);
+            color: var(--ink-light);
             cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 1.5rem;
+            transition: all 0.15s;
         }
-        .settings-toggle:hover { border-color: var(--purple-400); color: var(--purple-600); }
+        .topic-btn:hover {
+            border-color: var(--copper);
+            color: var(--copper-dark);
+        }
 
-        .settings-panel {
-            display: none;
-            background: white;
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            margin-top: 0.8rem;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--gray-200);
+        /* ── Input area ──────────────────────── */
+        .input-area {
+            max-width: 800px;
+            margin: 2rem auto 0;
+            padding: 0 2rem;
         }
-        .settings-panel.open { display: block; }
-        .settings-grid {
+        .input-box {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--surface);
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .input-box:focus-within { border-color: var(--copper); }
+        .input-box textarea {
+            width: 100%;
+            border: none;
+            padding: 1.25rem 1.5rem 0.75rem;
+            font-family: var(--sans);
+            font-size: 0.95rem;
+            color: var(--ink);
+            resize: none;
+            min-height: 88px;
+            background: transparent;
+            line-height: 1.6;
+        }
+        .input-box textarea:focus { outline: none; }
+        .input-box textarea::placeholder { color: var(--ink-muted); }
+        .input-actions {
+            display: flex;
+            justify-content: flex-end;
+            padding: 0.5rem 1rem 1rem;
+        }
+        .submit-btn {
+            padding: 0.55rem 1.5rem;
+            background: var(--copper);
+            color: #fff;
+            border: none;
+            border-radius: 7px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            font-family: var(--sans);
+            cursor: pointer;
+            transition: background 0.2s, opacity 0.2s;
+        }
+        .submit-btn:hover:not(:disabled) { background: var(--copper-dark); }
+        .submit-btn:disabled { opacity: 0.35; cursor: default; }
+
+        /* ── Settings drawer ─────────────────── */
+        .settings-drawer {
+            display: none;
+            max-width: 800px;
+            margin: 0.75rem auto 0;
+            padding: 0 2rem;
+        }
+        .settings-drawer.open { display: block; }
+        .settings-inner {
+            padding: 1.25rem 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--surface);
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1.2rem;
+            gap: 1.5rem;
         }
-        @media (max-width: 600px) { .settings-grid { grid-template-columns: 1fr; } }
-        .setting-group label {
-            display: block;
-            font-size: 0.82rem;
-            font-weight: 600;
-            color: var(--gray-600);
-            margin-bottom: 0.3rem;
+        @media (max-width: 600px) {
+            .settings-inner { grid-template-columns: 1fr; }
+            .stages-row { flex-wrap: wrap; }
+            .stage-btn { flex: 1 1 calc(50% - 1px); border-bottom: 1px solid var(--border); }
         }
-        .setting-group select, .setting-group input {
-            width: 100%;
-            padding: 0.5rem 0.8rem;
-            border: 1.5px solid var(--gray-200);
-            border-radius: 10px;
-            font-size: 0.88rem;
-            font-family: inherit;
-            color: var(--gray-700);
-            background: var(--gray-50);
-            transition: border-color 0.2s;
-        }
-        .setting-group select:focus, .setting-group input:focus {
-            outline: none;
-            border-color: var(--purple-400);
-        }
-        .setting-role {
-            font-size: 0.78rem;
-            color: var(--pink-500);
-            font-weight: 600;
+        .setting-col-label {
+            font-size: 0.7rem;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.6rem;
+            letter-spacing: 0.08em;
+            color: var(--copper);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
         }
-
-        /* ── Question input ─────────────────── */
-        .question-box {
-            margin-top: 2rem;
-            background: white;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 1.5rem;
-            border: 1px solid var(--gray-200);
+        .field { margin-bottom: 0.6rem; }
+        .field label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--ink-muted);
+            margin-bottom: 0.2rem;
         }
-        .question-box textarea {
+        .field select, .field input[type="text"] {
             width: 100%;
-            border: 1.5px solid var(--gray-200);
-            border-radius: 12px;
-            padding: 1rem;
-            font-family: inherit;
-            font-size: 1rem;
-            color: var(--gray-800);
-            resize: vertical;
-            min-height: 100px;
-            background: var(--gray-50);
-            transition: border-color 0.2s;
+            padding: 0.45rem 0.65rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-family: var(--sans);
+            font-size: 0.82rem;
+            color: var(--ink);
+            background: var(--bg);
         }
-        .question-box textarea:focus { outline: none; border-color: var(--purple-400); }
-        .question-box textarea::placeholder { color: var(--gray-400); }
-
-        .submit-btn {
-            margin-top: 1rem;
-            width: 100%;
-            padding: 0.85rem 2rem;
-            background: linear-gradient(135deg, var(--pink-500), var(--purple-600));
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.05rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.25s;
-            font-family: inherit;
-        }
-        .submit-btn:hover:not(:disabled) {
-            background: linear-gradient(135deg, var(--pink-600), var(--purple-700));
-            transform: translateY(-1px);
-            box-shadow: 0 6px 24px rgba(236,72,153,0.25);
-        }
-        .submit-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
+        .field select:focus, .field input[type="text"]:focus {
+            outline: none;
+            border-color: var(--copper);
         }
 
-        /* ── Loading ────────────────────────── */
-        .loading-overlay {
+        /* ── Loading ─────────────────────────── */
+        .loading {
             display: none;
-            margin-top: 2rem;
+            max-width: 800px;
+            margin: 2.5rem auto;
+            padding: 0 2rem;
             text-align: center;
-            padding: 3rem;
         }
-        .loading-overlay.active { display: block; }
-        .spinner {
-            width: 48px;
-            height: 48px;
-            border: 4px solid var(--pink-200);
-            border-top-color: var(--pink-500);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin: 0 auto 1rem;
+        .loading.active { display: block; }
+        .loading-bar {
+            height: 2px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 1rem;
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-bar-fill {
+            height: 100%;
+            width: 30%;
+            background: var(--copper);
+            border-radius: 2px;
+            animation: slide 1.5s ease-in-out infinite;
+        }
+        @keyframes slide {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(400%); }
+        }
         .loading-text {
-            color: var(--gray-500);
-            font-size: 1rem;
+            font-size: 0.85rem;
+            color: var(--ink-muted);
+            font-weight: 300;
+        }
+
+        /* ── Results ─────────────────────────── */
+        .results {
+            display: none;
+            max-width: 800px;
+            margin: 2.5rem auto 4rem;
+            padding: 0 2rem;
+        }
+        .results.visible { display: block; }
+
+        .results-header {
+            display: flex;
+            align-items: baseline;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .results-header h2 {
+            font-family: var(--serif);
+            font-size: 1.5rem;
+            font-weight: 400;
+        }
+        .results-header .results-stage {
+            font-size: 0.78rem;
+            color: var(--copper);
             font-weight: 500;
         }
 
-        /* ── Results ────────────────────────── */
-        .results { margin-top: 2.5rem; display: none; }
-        .results.visible { display: block; }
-
-        .analysis-card {
-            background: linear-gradient(135deg, #fdf4ff, #f5f3ff);
-            border: 1px solid var(--purple-200);
-            border-radius: var(--radius);
-            padding: 1.8rem;
-            margin-bottom: 1.5rem;
-        }
-        .analysis-card h3 {
-            color: var(--purple-600);
-            margin-bottom: 0.8rem;
-            font-size: 1.15rem;
-        }
-        .analysis-card p {
-            color: var(--gray-600);
-            line-height: 1.7;
+        .analysis {
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            color: var(--ink-light);
+            line-height: 1.75;
+            font-weight: 300;
         }
 
-        .specialist-card {
-            background: white;
-            border-radius: var(--radius);
-            padding: 1.8rem;
+        .perspectives-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--ink-muted);
             margin-bottom: 1rem;
-            box-shadow: var(--shadow);
-            border-left: 4px solid var(--pink-500);
-            transition: transform 0.2s;
         }
-        .specialist-card:hover { transform: translateX(4px); }
-        .specialist-card:nth-child(even) { border-left-color: var(--purple-500); }
-        .specialist-card h4 {
-            color: var(--purple-700);
-            font-size: 1.05rem;
+
+        .perspective {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--surface);
+        }
+        .perspective-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
             margin-bottom: 0.3rem;
         }
-        .specialist-card .spec-desc {
-            font-size: 0.82rem;
-            color: var(--gray-400);
-            font-style: italic;
-            margin-bottom: 0.8rem;
+        .perspective-type {
+            font-family: var(--serif);
+            font-size: 1.05rem;
         }
-        .specialist-card .spec-content {
-            color: var(--gray-700);
+        .perspective-num {
+            font-size: 0.72rem;
+            color: var(--ink-muted);
+            font-variant-numeric: tabular-nums;
+        }
+        .perspective-brief {
+            font-size: 0.8rem;
+            color: var(--ink-muted);
+            font-style: italic;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+        .perspective-content {
+            font-size: 0.92rem;
+            color: var(--ink-light);
             line-height: 1.75;
             white-space: pre-wrap;
+            font-weight: 300;
         }
 
         .disclaimer {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.78rem;
+            color: var(--ink-muted);
             text-align: center;
-            font-size: 0.82rem;
-            color: var(--gray-400);
-            margin-top: 2rem;
-            padding: 1rem;
-            background: var(--gray-50);
-            border-radius: 12px;
+            font-weight: 300;
         }
 
-        /* ── Footer ─────────────────────────── */
-        .footer {
-            text-align: center;
-            color: var(--gray-400);
-            font-size: 0.85rem;
-            padding: 2rem 1rem;
-            margin-top: 3rem;
-        }
-
-        /* ── Error ──────────────────────────── */
+        /* ── Error ───────────────────────────── */
         .error-box {
             display: none;
-            margin-top: 2rem;
-            padding: 1.2rem 1.5rem;
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            border-radius: 12px;
-            color: #991b1b;
-            font-size: 0.95rem;
+            max-width: 800px;
+            margin: 1.5rem auto;
+            padding: 0 2rem;
         }
         .error-box.visible { display: block; }
+        .error-inner {
+            padding: 0.9rem 1.25rem;
+            border: 1px solid #e5c7c0;
+            border-radius: 8px;
+            background: #fdf5f3;
+            color: var(--copper-dark);
+            font-size: 0.88rem;
+        }
+
+        /* ── Footer ──────────────────────────── */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.78rem;
+            color: var(--ink-muted);
+            border-top: 1px solid var(--border);
+            font-weight: 300;
+        }
     </style>
 </head>
 <body>
 
-<!-- Header -->
-<div class="header">
-    <h1>🌸 SupportHers</h1>
-    <p>AI-powered wellness guidance for every stage of a woman's life</p>
-    <span class="iwd-badge">International Women's Day 2026</span>
+<nav>
+    <div class="nav-brand">
+        <img src="/static/supporthers.png" alt="SupportHers">
+        <span>SupportHers</span>
+    </div>
+    <button class="nav-settings" id="settingsToggle">Settings</button>
+</nav>
+
+<div class="hero">
+    <h1>Wellness guidance for <em>every stage</em> of your life</h1>
+    <p>Multi-perspective AI insights from specialist viewpoints, tailored to where you are right now.</p>
 </div>
 
-<div class="container">
+<div class="stages">
+    <div class="stages-label">Life stage</div>
+    <div class="stages-row" id="stagesRow"></div>
+</div>
 
-    <!-- Life Stages -->
-    <div class="section-title">Choose your life stage</div>
-    <div class="stages-grid" id="stagesGrid"></div>
-
-    <!-- Example topics -->
-    <div id="topicsSection" style="display:none">
-        <div class="section-title">Try an example topic</div>
-        <div class="topics-row" id="topicsRow"></div>
+<div class="stage-detail" id="stageDetail">
+    <div class="stage-detail-inner">
+        <div class="stage-detail-desc" id="stageDesc"></div>
+        <div class="stage-detail-topics" id="stageTopics"></div>
     </div>
+</div>
 
-    <!-- Settings -->
-    <button class="settings-toggle" id="settingsToggle">
-        ⚙️ Model Settings
-    </button>
-    <div class="settings-panel" id="settingsPanel">
-        <div class="settings-grid">
-            <div>
-                <div class="setting-role">Orchestrator (analyses your question)</div>
-                <div class="setting-group">
-                    <label>Provider</label>
-                    <select id="orchProvider"></select>
-                </div>
-                <div class="setting-group" style="margin-top:0.6rem">
-                    <label>Model</label>
-                    <input id="orchModel" type="text">
-                </div>
+<div class="settings-drawer" id="settingsDrawer">
+    <div class="settings-inner">
+        <div>
+            <div class="setting-col-label">Orchestrator</div>
+            <div class="field">
+                <label>Provider</label>
+                <select id="orchProvider"></select>
             </div>
-            <div>
-                <div class="setting-role">Workers (specialist insights)</div>
-                <div class="setting-group">
-                    <label>Provider</label>
-                    <select id="workerProvider"></select>
-                </div>
-                <div class="setting-group" style="margin-top:0.6rem">
-                    <label>Model</label>
-                    <input id="workerModel" type="text">
-                </div>
+            <div class="field">
+                <label>Model</label>
+                <input type="text" id="orchModel">
+            </div>
+        </div>
+        <div>
+            <div class="setting-col-label">Workers</div>
+            <div class="field">
+                <label>Provider</label>
+                <select id="workerProvider"></select>
+            </div>
+            <div class="field">
+                <label>Model</label>
+                <input type="text" id="workerModel">
             </div>
         </div>
     </div>
-
-    <!-- Question -->
-    <div class="question-box">
-        <textarea id="questionInput" placeholder="e.g. How can I manage stress while balancing work and family?"></textarea>
-        <button class="submit-btn" id="submitBtn" disabled>🔮 Get Wellness Insights</button>
-    </div>
-
-    <!-- Loading -->
-    <div class="loading-overlay" id="loading">
-        <div class="spinner"></div>
-        <div class="loading-text">Consulting wellness specialists...</div>
-    </div>
-
-    <!-- Error -->
-    <div class="error-box" id="errorBox"></div>
-
-    <!-- Results -->
-    <div class="results" id="results"></div>
 </div>
 
-<div class="footer">
-    Made with ❤️ for International Women's Day 2026 — SupportHers: because every woman deserves personalised wellness guidance.
+<div class="input-area">
+    <div class="input-box">
+        <textarea id="questionInput" placeholder="What would you like guidance on?" rows="3"></textarea>
+        <div class="input-actions">
+            <button class="submit-btn" id="submitBtn" disabled>Ask</button>
+        </div>
+    </div>
 </div>
+
+<div class="loading" id="loading">
+    <div class="loading-bar"><div class="loading-bar-fill"></div></div>
+    <div class="loading-text">Gathering specialist perspectives...</div>
+</div>
+
+<div class="error-box" id="errorBox"><div class="error-inner" id="errorText"></div></div>
+
+<div class="results" id="results"></div>
+
+<footer>
+    SupportHers &mdash; AI-generated wellness information, not medical advice.
+</footer>
 
 <script>
 (function() {
-    // ── State ──
     let selectedStage = null;
-    let lifeStages = [];
+    let stages = [];
     let providers = [];
 
     const $ = id => document.getElementById(id);
 
-    // ── Boot ──
     async function init() {
-        const [stagesRes, providersRes] = await Promise.all([
+        const [s, p] = await Promise.all([
             fetch('/api/life-stages').then(r => r.json()),
             fetch('/api/providers').then(r => r.json()),
         ]);
-        lifeStages = stagesRes;
-        providers = providersRes;
+        stages = s;
+        providers = p;
         renderStages();
         renderProviders();
     }
 
-    // ── Render life stage cards ──
     function renderStages() {
-        const grid = $('stagesGrid');
-        grid.innerHTML = lifeStages.map(s => `
-            <div class="stage-card" data-key="${s.key}">
-                <div class="stage-icon">${s.icon}</div>
-                <div class="stage-label">${s.label}</div>
-                <div class="stage-age">${s.age_range}</div>
-                <div class="stage-desc">${s.description}</div>
-            </div>
-        `).join('');
+        $('stagesRow').innerHTML = stages.map(s =>
+            `<button class="stage-btn" data-key="${s.key}">
+                <span class="stage-btn-label">${s.label}</span>
+                <span class="stage-btn-age">${s.age_range}</span>
+            </button>`
+        ).join('');
 
-        grid.querySelectorAll('.stage-card').forEach(card => {
-            card.addEventListener('click', () => selectStage(card.dataset.key));
+        $('stagesRow').querySelectorAll('.stage-btn').forEach(btn => {
+            btn.addEventListener('click', () => selectStage(btn.dataset.key));
         });
     }
 
     function selectStage(key) {
         selectedStage = key;
-        document.querySelectorAll('.stage-card').forEach(c =>
-            c.classList.toggle('selected', c.dataset.key === key)
+        document.querySelectorAll('.stage-btn').forEach(b =>
+            b.classList.toggle('active', b.dataset.key === key)
         );
-        const stage = lifeStages.find(s => s.key === key);
-        if (stage) renderTopics(stage.example_topics);
-        updateSubmitBtn();
-    }
+        const s = stages.find(x => x.key === key);
+        if (!s) return;
 
-    function renderTopics(topics) {
-        const section = $('topicsSection');
-        const row = $('topicsRow');
-        row.innerHTML = topics.map(t => `<span class="topic-chip">${t}</span>`).join('');
-        row.querySelectorAll('.topic-chip').forEach(chip => {
-            chip.addEventListener('click', () => {
-                $('questionInput').value = chip.textContent;
-                updateSubmitBtn();
+        $('stageDesc').textContent = s.description;
+        $('stageTopics').innerHTML = s.example_topics.map(t =>
+            `<button class="topic-btn">${esc(t)}</button>`
+        ).join('');
+        $('stageTopics').querySelectorAll('.topic-btn').forEach(b => {
+            b.addEventListener('click', () => {
+                $('questionInput').value = b.textContent;
+                updateBtn();
+                $('questionInput').focus();
             });
         });
-        section.style.display = 'block';
+        $('stageDetail').classList.add('visible');
+        updateBtn();
     }
 
-    // ── Render provider selects ──
     function renderProviders() {
         if (!providers.length) return;
-        const optionsHtml = providers.map(p =>
+        const opts = providers.map(p =>
             `<option value="${p.key}" data-model="${p.default_model}">${p.label}</option>`
         ).join('');
-
-        $('orchProvider').innerHTML = optionsHtml;
-        $('workerProvider').innerHTML = optionsHtml;
+        $('orchProvider').innerHTML = opts;
+        $('workerProvider').innerHTML = opts;
         $('orchModel').value = providers[0].default_model;
         $('workerModel').value = providers[0].default_model;
 
@@ -514,22 +596,24 @@
         });
     }
 
-    // ── Settings toggle ──
-    $('settingsToggle').addEventListener('click', () => {
-        $('settingsPanel').classList.toggle('open');
-    });
+    $('settingsToggle').addEventListener('click', () =>
+        $('settingsDrawer').classList.toggle('open')
+    );
 
-    // ── Submit ──
-    function updateSubmitBtn() {
+    function updateBtn() {
         $('submitBtn').disabled = !selectedStage || !$('questionInput').value.trim();
     }
-    $('questionInput').addEventListener('input', updateSubmitBtn);
+    $('questionInput').addEventListener('input', updateBtn);
 
-    $('submitBtn').addEventListener('click', async () => {
-        const question = $('questionInput').value.trim();
-        if (!question || !selectedStage) return;
+    $('submitBtn').addEventListener('click', submit);
+    $('questionInput').addEventListener('keydown', e => {
+        if (e.key === 'Enter' && (e.metaKey || e.ctrlKey) && !$('submitBtn').disabled) submit();
+    });
 
-        // UI state
+    async function submit() {
+        const q = $('questionInput').value.trim();
+        if (!q || !selectedStage) return;
+
         $('loading').classList.add('active');
         $('results').classList.remove('visible');
         $('errorBox').classList.remove('visible');
@@ -540,7 +624,7 @@
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    question,
+                    question: q,
                     life_stage: selectedStage,
                     orchestrator_provider: $('orchProvider').value,
                     worker_provider: $('workerProvider').value,
@@ -548,62 +632,59 @@
                     worker_model: $('workerModel').value || null,
                 }),
             });
-
-            if (!res.ok) throw new Error(`Server returned ${res.status}`);
+            if (!res.ok) throw new Error(`Server error (${res.status})`);
             const data = await res.json();
             if (data.error) throw new Error(data.error);
-
             renderResults(data);
         } catch (err) {
-            $('errorBox').textContent = `Something went wrong: ${err.message}`;
+            $('errorText').textContent = err.message;
             $('errorBox').classList.add('visible');
         } finally {
             $('loading').classList.remove('active');
-            updateSubmitBtn();
+            updateBtn();
         }
-    });
+    }
 
-    // ── Render results ──
     function renderResults(data) {
-        let html = '';
+        const stage = stages.find(s => s.key === selectedStage);
+        let html = `
+            <div class="results-header">
+                <h2>Your Wellness Insights</h2>
+                <span class="results-stage">${esc(stage?.label || '')}</span>
+            </div>
+        `;
 
         if (data.analysis) {
-            html += `
-                <div class="analysis-card">
-                    <h3>🧠 Overview</h3>
-                    <p>${escapeHtml(data.analysis)}</p>
-                </div>
-            `;
+            html += `<div class="analysis">${esc(data.analysis)}</div>`;
         }
 
-        if (data.worker_results) {
+        if (data.worker_results?.length) {
+            html += `<div class="perspectives-label">Specialist perspectives</div>`;
             data.worker_results.forEach((wr, i) => {
                 const title = wr.type.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
                 html += `
-                    <div class="specialist-card">
-                        <h4>${i + 1}. ${escapeHtml(title)}</h4>
-                        <div class="spec-desc">${escapeHtml(wr.description)}</div>
-                        <div class="spec-content">${escapeHtml(wr.result)}</div>
+                    <div class="perspective">
+                        <div class="perspective-header">
+                            <span class="perspective-type">${esc(title)}</span>
+                            <span class="perspective-num">${i + 1} / ${data.worker_results.length}</span>
+                        </div>
+                        <div class="perspective-brief">${esc(wr.description)}</div>
+                        <div class="perspective-content">${esc(wr.result)}</div>
                     </div>
                 `;
             });
         }
 
-        html += `
-            <div class="disclaimer">
-                This is AI-generated wellness information, not medical advice.
-                Always consult a qualified healthcare professional for personal health decisions.
-            </div>
-        `;
+        html += `<div class="disclaimer">This is AI-generated wellness information, not medical advice. Always consult a qualified healthcare professional.</div>`;
 
         $('results').innerHTML = html;
         $('results').classList.add('visible');
         $('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    function escapeHtml(str) {
+    function esc(s) {
         const d = document.createElement('div');
-        d.textContent = str || '';
+        d.textContent = s || '';
         return d.innerHTML;
     }
 
